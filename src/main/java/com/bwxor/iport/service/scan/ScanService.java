@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ScanService {
     void scan(IPAddress start, IPAddress end, List<Port> ports, int timeout);
+    void stop();
+    boolean isStopped();
 }

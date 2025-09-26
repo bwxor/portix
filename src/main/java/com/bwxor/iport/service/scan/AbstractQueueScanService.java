@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public abstract class AbstractQueueScanService implements ScanService {
     protected ConcurrentLinkedQueue<ScanResult> scanQueue;
+    protected boolean stopped;
 
     @Override
     public synchronized void scan(IPAddress start, IPAddress end, List<Port> ports, int timeout) {
@@ -17,8 +18,12 @@ public abstract class AbstractQueueScanService implements ScanService {
 
         IPAddress currentIp = start;
 
-        while (!currentIp.after(end)) {
+        while (!currentIp.after(end) && !isStopped()) {
             for (var p : ports) {
+                if (isStopped()) {
+                    return;
+                }
+
                 ScanResult scanResult = doScan(new IPAddress(currentIp.toString()), p, timeout);
                 scanQueue.add(scanResult);
             }
@@ -32,4 +37,16 @@ public abstract class AbstractQueueScanService implements ScanService {
     }
 
     protected abstract ScanResult doScan(IPAddress currentIp, Port port, int timeout);
+
+    public void setScanQueue(ConcurrentLinkedQueue<ScanResult> scanQueue) {
+        this.scanQueue = scanQueue;
+    }
+
+    public void stop() {
+        stopped = true;
+    }
+
+    public boolean isStopped() {
+        return stopped;
+    }
 }

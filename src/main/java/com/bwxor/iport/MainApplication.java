@@ -3,6 +3,7 @@ package com.bwxor.iport;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,6 +18,8 @@ public class MainApplication extends Application {
                 stage.setMaximized(false); // force back to normal
             }
         });
+
+        stage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("img/icon.png")));
 
         stage.setWidth(475);
         stage.setHeight(475);

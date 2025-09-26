@@ -6,6 +6,7 @@ module com.bwxor.iport {
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
     requires eu.hansolo.tilesfx;
+    requires javafx.graphics;
 
     opens com.bwxor.iport to javafx.fxml;
     opens com.bwxor.iport.entity to javafx.base;

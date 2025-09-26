@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,7 +29,6 @@ public class MainController {
     private int timeout;
 
     private AbstractQueueScanService scanService;
-    private boolean scanStopped;
     private long noEntriesToScan;
     private long noProcessed;
 
@@ -115,16 +115,13 @@ public class MainController {
     }
 
     @FXML
-    public void onScanButtonClick() {
+    public void onScanButtonClick() throws InterruptedException {
         scanButton.setDisable(true);
-        clearButton.setDisable(false);
-        stopButton.setDisable(false);
 
         progressBar.setProgress(0);
         noEntriesToScan = to.diff(from) * filter.size();
         noProcessed = 0;
 
-        scanStopped = false;
         resultTableView.setItems(FXCollections.observableArrayList());
 
         scanService = new InetSocketQueueScanService();
@@ -143,20 +140,24 @@ public class MainController {
                 () -> {
                     var queue = scanService.getScanQueue();
                     if (queue != null && !queue.isEmpty()) {
-                        while (!queue.isEmpty() && !scanStopped) {
+                        while (!queue.isEmpty() && !scanService.isStopped()) {
                             ScanResult sr = queue.poll();
                             scanResults.add(sr);
                             data.add(sr);
-                            progressBar.setProgress((double) (10 * noProcessed++) / noEntriesToScan);
+                            progressBar.setProgress((double) (10 * scanResults.size()) / noEntriesToScan);
                             resultTableView.setItems(data);
 
                             if (clearButton.isDisabled()) {
                                 clearButton.setDisable(false);
                             }
+
+                            if (stopButton.isDisabled()) {
+                                stopButton.setDisable(false);
+                            }
                         }
 
                     }
-                    if (scanStopped || (queue.isEmpty() && future.isDone())) {
+                    if (scanService.isStopped() || (queue.isEmpty() && future.isDone())) {
                         accumulator.shutdown();
                         poller.shutdown();
                         Platform.runLater(() -> {
@@ -170,8 +171,8 @@ public class MainController {
     }
 
     @FXML
-    public void onStopButtonClick() {
-        scanStopped = true;
+    public void onStopButtonClick() throws InterruptedException {
+        scanService.stop();
         stopButton.setDisable(true);
     }
 
@@ -187,6 +188,8 @@ public class MainController {
 
         Stage stage = new Stage();
         stage.setTitle("Preferences");
+
+        stage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("img/icon.png")));
 
         Scene scene = new Scene(fxmlLoader.load());
         PreferencesController preferencesController = fxmlLoader.getController();
