@@ -33,6 +33,7 @@ public class MainApplication extends Application {
         stage.setTitle("iport");
 
         Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(MainApplication.class.getResource("css/onyx.css").toExternalForm());
         stage.setScene(scene);
 
         stage.show();

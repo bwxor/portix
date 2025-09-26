@@ -191,6 +191,8 @@ public class MainController {
         stage.setResizable(false);
 
         Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(MainApplication.class.getResource("css/onyx.css").toExternalForm());
+
         PreferencesController preferencesController = fxmlLoader.getController();
         preferencesController.setFrom(from);
         preferencesController.setTo(to);
