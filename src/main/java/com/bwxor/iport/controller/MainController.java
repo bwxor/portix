@@ -30,7 +30,6 @@ public class MainController {
 
     private AbstractQueueScanService scanService;
     private long noEntriesToScan;
-    private long noProcessed;
 
     @FXML
     private Button scanButton;
@@ -119,8 +118,7 @@ public class MainController {
         scanButton.setDisable(true);
 
         progressBar.setProgress(0);
-        noEntriesToScan = to.diff(from) * filter.size();
-        noProcessed = 0;
+        noEntriesToScan = (to.diff(from) + 1) * filter.size();
 
         resultTableView.setItems(FXCollections.observableArrayList());
 
@@ -164,7 +162,6 @@ public class MainController {
                             scanButton.setDisable(false);
                             stopButton.setDisable(true);
                         });
-                        progressBar.setProgress(0);
                     }
                 }, 0, 100, TimeUnit.MILLISECONDS
         );
