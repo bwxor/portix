@@ -6,5 +6,5 @@ import com.bwxor.iport.entity.Port;
 import java.util.List;
 
 public interface ScanService {
-    void scan(IPAddress start, IPAddress end, List<Port> ports);
+    void scan(IPAddress start, IPAddress end, List<Port> ports, int timeout);
 }

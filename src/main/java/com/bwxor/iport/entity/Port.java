@@ -11,4 +11,8 @@ public class Port {
     public String toString() {
         return String.valueOf(value);
     }
+
+    public int getValue() {
+        return value;
+    }
 }

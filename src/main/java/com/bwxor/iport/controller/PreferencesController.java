@@ -2,6 +2,7 @@ package com.bwxor.iport.controller;
 
 import com.bwxor.iport.entity.IPAddress;
 import com.bwxor.iport.entity.Port;
+import com.bwxor.iport.exception.IPAddressBuildException;
 import com.bwxor.iport.util.IntParser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,6 +18,7 @@ public class PreferencesController {
     private IPAddress from;
     private IPAddress to;
     private List<Port> filter;
+    private Integer timeout;
 
     public IPAddress getFrom() {
         return from;
@@ -40,6 +42,14 @@ public class PreferencesController {
 
     public void setFilter(List<Port> filter) {
         this.filter = filter;
+    }
+
+    public Integer getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(Integer timeout) {
+        this.timeout = timeout;
     }
 
     public TextField getFromTextField() {
@@ -88,6 +98,8 @@ public class PreferencesController {
     private TextField toTextField;
     @FXML
     private TextArea filterTextArea;
+    @FXML
+    private TextField timeoutTextField;
 
     @FXML
     private Button applyButton;
@@ -115,12 +127,25 @@ public class PreferencesController {
                                     StringBuilder::append)
                             .toString());
         }
+
+        if (timeout != null) {
+            timeoutTextField.setText(timeout.toString());
+        }
     }
 
     @FXML
     public void onApplyButtonClick() {
-        from = new IPAddress(fromTextField.getText());
-        to = new IPAddress(toTextField.getText());
+        try {
+            from = new IPAddress(fromTextField.getText());
+        } catch (IPAddressBuildException ex) {
+            from = new IPAddress("192.168.1.1");
+        }
+
+        try {
+            to = new IPAddress(toTextField.getText());
+        } catch (IPAddressBuildException ex) {
+            to = new IPAddress("192.168.1.254");
+        }
 
         String[] delimitedFilters = filterTextArea.getText().trim().replace("\r", "").split("\n");
 
@@ -128,6 +153,12 @@ public class PreferencesController {
                 .filter(IntParser::tryParse)
                 .map(e -> new Port(Integer.parseInt(e)))
                 .collect(Collectors.toList());
+
+        try {
+            timeout = Integer.parseInt(timeoutTextField.getText());
+        } catch(NumberFormatException ex) {
+            timeout = 1000;
+        }
 
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();

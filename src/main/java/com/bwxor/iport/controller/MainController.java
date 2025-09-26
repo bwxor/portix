@@ -5,7 +5,7 @@ import com.bwxor.iport.entity.IPAddress;
 import com.bwxor.iport.entity.Port;
 import com.bwxor.iport.entity.ScanResult;
 import com.bwxor.iport.service.scan.AbstractQueueScanService;
-import com.bwxor.iport.service.scan.MockQueueScanService;
+import com.bwxor.iport.service.scan.impl.InetSocketQueueScanService;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,9 +25,12 @@ public class MainController {
     private IPAddress from;
     private IPAddress to;
     private List<Port> filter;
+    private int timeout;
 
     private AbstractQueueScanService scanService;
     private boolean scanStopped;
+    private long noEntriesToScan;
+    private long noProcessed;
 
     @FXML
     private Button scanButton;
@@ -88,6 +91,8 @@ public class MainController {
                 new Port(8080)
         );
 
+        timeout = 1000;
+
         stopButton.setDisable(true);
         clearButton.setDisable(true);
 
@@ -116,11 +121,13 @@ public class MainController {
         stopButton.setDisable(false);
 
         progressBar.setProgress(0);
+        noEntriesToScan = to.diff(from) * filter.size();
+        noProcessed = 0;
 
         scanStopped = false;
         resultTableView.setItems(FXCollections.observableArrayList());
 
-        scanService = new MockQueueScanService();
+        scanService = new InetSocketQueueScanService();
 
         var scanResults = new ArrayList<ScanResult>();
 
@@ -128,7 +135,7 @@ public class MainController {
 
         ExecutorService accumulator = Executors.newSingleThreadExecutor();
         Future<?> future = accumulator.submit(
-                () -> scanService.scan(new IPAddress(from.toString()), new IPAddress(to.toString()), new ArrayList<>(filter))
+                () -> scanService.scan(new IPAddress(from.toString()), new IPAddress(to.toString()), new ArrayList<>(filter), timeout)
         );
 
         ScheduledExecutorService poller = Executors.newSingleThreadScheduledExecutor();
@@ -140,12 +147,14 @@ public class MainController {
                             ScanResult sr = queue.poll();
                             scanResults.add(sr);
                             data.add(sr);
+                            progressBar.setProgress((double) (10 * noProcessed++) / noEntriesToScan);
                             resultTableView.setItems(data);
 
                             if (clearButton.isDisabled()) {
                                 clearButton.setDisable(false);
                             }
                         }
+
                     }
                     if (scanStopped || (queue.isEmpty() && future.isDone())) {
                         accumulator.shutdown();
@@ -154,6 +163,7 @@ public class MainController {
                             scanButton.setDisable(false);
                             stopButton.setDisable(true);
                         });
+                        progressBar.setProgress(0);
                     }
                 }, 0, 100, TimeUnit.MILLISECONDS
         );
@@ -183,6 +193,7 @@ public class MainController {
         preferencesController.setFrom(from);
         preferencesController.setTo(to);
         preferencesController.setFilter(filter);
+        preferencesController.setTimeout(timeout);
         preferencesController.manuallyInit();
         stage.setScene(scene);
 
@@ -191,5 +202,6 @@ public class MainController {
         from = preferencesController.getFrom();
         to = preferencesController.getTo();
         filter = preferencesController.getFilter();
+        timeout = preferencesController.getTimeout();
     }
 }
