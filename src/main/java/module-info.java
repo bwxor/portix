@@ -8,5 +8,9 @@ module com.bwxor.iport {
     requires eu.hansolo.tilesfx;
 
     opens com.bwxor.iport to javafx.fxml;
+    opens com.bwxor.iport.entity to javafx.base;
+
     exports com.bwxor.iport;
+    exports com.bwxor.iport.controller;
+    opens com.bwxor.iport.controller to javafx.fxml;
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="475.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bwxor.iport.controller.MainController">
+    <VBox prefHeight="475.0" prefWidth="475.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+        <children>
+            <ToolBar prefHeight="40.0" prefWidth="200.0">
+                <items>
+                    <Button mnemonicParsing="false" text="Preferences" onAction="#onPreferencesButtonClick" />
+                    <TextArea prefHeight="25.0" prefWidth="213.0" minHeight="25.0" maxHeight="25.0" />
+                    <Button fx:id="scanButton" mnemonicParsing="false" onAction="#onScanButtonClick" text="Scan" />
+                    <Button fx:id="stopButton" mnemonicParsing="false" onAction="#onStopButtonClick" text="Stop" />
+                    <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClearButtonClick" text="Clear" />
+                </items>
+            </ToolBar>
+            <TableView fx:id="resultTableView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="ipAddressColumn" text="IP Address" />
+                    <TableColumn fx:id="portColumn" text="Port" />
+                    <TableColumn fx:id="statusColumn" text="Status" />
+                </columns>
+            </TableView>
+            <HBox prefHeight="21.0" prefWidth="390.0">
+                <children>
+                    <ProgressBar fx:id="progressBar" maxWidth="Infinity" progress="0.0" HBox.hgrow="ALWAYS" />
+                </children>
+            </HBox>
+        </children>
+        <VBox.margin>
+            <Insets />
+        </VBox.margin>
+    </VBox>
+</AnchorPane>

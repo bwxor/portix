@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b371f7a5-5453-463e-af60-ba22fc3ccccb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/controller/MainController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/controller/PreferencesController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/entity/IPAddress.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/entity/Port.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/entity/ScanResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/exception/IPAddressBuildException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/service/scan/AbstractQueueScanService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/service/scan/MockQueueScanService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/service/scan/ScanService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/type/FilterType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/type/ScanStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/util/ByteParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/util/IntParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/bwxor/iport/preferences-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/HelloController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bwxor/iport/Launcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/bwxor/iport/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/bwxor/iport/main-view.fxml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Enum" />
+        <option value="FxmlFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="33DrRHgxmSu7o7KlPd2OxtbZuy0" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Launcher.executor": "Run",
+    "Application.MainApplication.executor": "Run",
+    "Application.Run App.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.bwxor.iport" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Run App" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.bwxor.iport.MainApplication" />
+      <module name="iport" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b371f7a5-5453-463e-af60-ba22fc3ccccb" name="Changes" comment="" />
+      <created>1758862476073</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1758862476073</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bwxor/iport/service/scan/AbstractQueueScanService.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
