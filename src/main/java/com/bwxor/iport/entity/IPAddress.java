@@ -45,7 +45,7 @@ public class IPAddress {
 
         for (int i = 3; i > 0; i--) {
             if (incrementNext) {
-                if (bytes[i] > 255) {
+                if (bytes[i] >= 255) {
                     bytes[i] = 0;
                 } else {
                     bytes[i]++;

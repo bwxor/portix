@@ -144,7 +144,7 @@ public class MainController {
                             ScanResult sr = queue.poll();
                             scanResults.add(sr);
                             data.add(sr);
-                            progressBar.setProgress((double) (10 * scanResults.size()) / noEntriesToScan);
+                            progressBar.setProgress((double) scanResults.size() / noEntriesToScan);
                             resultTableView.setItems(data);
 
                             if (clearButton.isDisabled()) {
@@ -190,6 +190,8 @@ public class MainController {
         stage.setTitle("Preferences");
 
         stage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("img/icon.png")));
+
+        stage.setResizable(false);
 
         Scene scene = new Scene(fxmlLoader.load());
         PreferencesController preferencesController = fxmlLoader.getController();
