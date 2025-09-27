@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
@@ -92,6 +94,15 @@ public class PreferencesController {
         this.cancelButton = cancelButton;
     }
 
+    private double xOffset = 0;
+    private double yOffset = 0;
+
+    @FXML
+    private Pane topPane;
+    @FXML
+    private Button closeButton;
+    @FXML
+    private Button minimizeButton;
     @FXML
     private TextField fromTextField;
     @FXML
@@ -168,5 +179,31 @@ public class PreferencesController {
     public void onCancelButtonClick() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    public void onCloseButtonClick() {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    public void onMinimizeButtonClick() {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    @FXML
+    public void handleClickAction(MouseEvent mouseEvent) {
+        Stage stage = (Stage) topPane.getScene().getWindow();
+        xOffset = stage.getX() - mouseEvent.getScreenX();
+        yOffset = stage.getY() - mouseEvent.getScreenY();
+    }
+
+    @FXML
+    public void handleMovementAction(MouseEvent mouseEvent) {
+        Stage stage = (Stage)topPane.getScene().getWindow();
+        stage.setX(mouseEvent.getScreenX() + xOffset);
+        stage.setY(mouseEvent.getScreenY() + yOffset);
     }
 }

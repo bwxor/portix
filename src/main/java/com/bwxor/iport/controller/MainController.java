@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -114,7 +115,7 @@ public class MainController {
     }
 
     @FXML
-    public void onScanButtonClick() throws InterruptedException {
+    public void onScanButtonClick() {
         scanButton.setDisable(true);
 
         progressBar.setProgress(0);
@@ -136,26 +137,42 @@ public class MainController {
         ScheduledExecutorService poller = Executors.newSingleThreadScheduledExecutor();
         poller.scheduleAtFixedRate(
                 () -> {
+                    int pollerWaitCounter = 0;
+
                     var queue = scanService.getScanQueue();
-                    if (queue != null && !queue.isEmpty()) {
-                        while (!queue.isEmpty() && !scanService.isStopped()) {
-                            ScanResult sr = queue.poll();
-                            scanResults.add(sr);
-                            data.add(sr);
-                            progressBar.setProgress((double) scanResults.size() / noEntriesToScan);
-                            resultTableView.setItems(data);
 
-                            if (clearButton.isDisabled()) {
-                                clearButton.setDisable(false);
-                            }
-
-                            if (stopButton.isDisabled()) {
-                                stopButton.setDisable(false);
-                            }
+                    // Solve race condition where queue is not initialized by the accumulator thread on time
+                    while (queue == null) {
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
                         }
 
+                        // Additional safety measure: If the queue doesn't get initialized within 3 seconds, stop the polling
+                        if (pollerWaitCounter++ == 10) {
+                            scanService.stop();
+                            break;
+                        }
                     }
-                    if (scanService.isStopped() || (queue.isEmpty() && future.isDone())) {
+
+                    while (queue != null && !queue.isEmpty() && !scanService.isStopped()) {
+                        ScanResult sr = queue.poll();
+                        scanResults.add(sr);
+                        data.add(sr);
+                        progressBar.setProgress((double) scanResults.size() / noEntriesToScan);
+                        resultTableView.setItems(data);
+
+                        if (clearButton.isDisabled()) {
+                            clearButton.setDisable(false);
+                        }
+
+                        if (stopButton.isDisabled()) {
+                            stopButton.setDisable(false);
+                        }
+                    }
+
+                    if (scanService.isStopped() || queue == null || (queue.isEmpty() && future.isDone())) {
                         accumulator.shutdown();
                         poller.shutdown();
                         Platform.runLater(() -> {
@@ -163,12 +180,12 @@ public class MainController {
                             stopButton.setDisable(true);
                         });
                     }
-                }, 0, 100, TimeUnit.MILLISECONDS
+                }, 1500, 100, TimeUnit.MILLISECONDS
         );
     }
 
     @FXML
-    public void onStopButtonClick() throws InterruptedException {
+    public void onStopButtonClick() {
         scanService.stop();
         stopButton.setDisable(true);
     }
@@ -199,6 +216,7 @@ public class MainController {
         preferencesController.setFilter(filter);
         preferencesController.setTimeout(timeout);
         preferencesController.manuallyInit();
+        stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
 
         stage.showAndWait();
