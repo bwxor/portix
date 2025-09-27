@@ -9,7 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
@@ -96,7 +98,10 @@ public class PreferencesController {
 
     private double xOffset = 0;
     private double yOffset = 0;
-
+    @FXML
+    private AnchorPane root;
+    @FXML
+    private Rectangle clipRect;
     @FXML
     private Pane topPane;
     @FXML
@@ -117,6 +122,11 @@ public class PreferencesController {
 
     @FXML
     private Button cancelButton;
+
+    public void initialize() {
+        clipRect.widthProperty().bind(root.widthProperty());
+        clipRect.heightProperty().bind(root.heightProperty());
+    }
 
     public void manuallyInit() {
         if (from != null) {
@@ -167,7 +177,7 @@ public class PreferencesController {
 
         try {
             timeout = Integer.parseInt(timeoutTextField.getText());
-        } catch(NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             timeout = 1000;
         }
 
@@ -202,7 +212,7 @@ public class PreferencesController {
 
     @FXML
     public void handleMovementAction(MouseEvent mouseEvent) {
-        Stage stage = (Stage)topPane.getScene().getWindow();
+        Stage stage = (Stage) topPane.getScene().getWindow();
         stage.setX(mouseEvent.getScreenX() + xOffset);
         stage.setY(mouseEvent.getScreenY() + yOffset);
     }

@@ -15,6 +15,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -31,6 +36,21 @@ public class MainController {
 
     private AbstractQueueScanService scanService;
     private long noEntriesToScan;
+
+    private double xOffset = 0;
+    private double yOffset = 0;
+
+    @FXML
+    private AnchorPane root;
+    @FXML
+    private Rectangle clipRect;
+
+    @FXML
+    private Pane topPane;
+    @FXML
+    private Button closeButton;
+    @FXML
+    private Button minimizeButton;
 
     @FXML
     private Button scanButton;
@@ -55,6 +75,9 @@ public class MainController {
 
     @FXML
     private void initialize() {
+        clipRect.widthProperty().bind(root.widthProperty());
+        clipRect.heightProperty().bind(root.heightProperty());
+
         from = new IPAddress("192.168.1.1");
         to = new IPAddress("192.168.1.254");
 
@@ -208,6 +231,7 @@ public class MainController {
         stage.setResizable(false);
 
         Scene scene = new Scene(fxmlLoader.load());
+        scene.setFill(Color.TRANSPARENT);
         scene.getStylesheets().add(MainApplication.class.getResource("css/onyx.css").toExternalForm());
 
         PreferencesController preferencesController = fxmlLoader.getController();
@@ -225,5 +249,31 @@ public class MainController {
         to = preferencesController.getTo();
         filter = preferencesController.getFilter();
         timeout = preferencesController.getTimeout();
+    }
+
+    @FXML
+    public void onCloseButtonClick() {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    public void onMinimizeButtonClick() {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    @FXML
+    public void handleClickAction(MouseEvent mouseEvent) {
+        Stage stage = (Stage) topPane.getScene().getWindow();
+        xOffset = stage.getX() - mouseEvent.getScreenX();
+        yOffset = stage.getY() - mouseEvent.getScreenY();
+    }
+
+    @FXML
+    public void handleMovementAction(MouseEvent mouseEvent) {
+        Stage stage = (Stage) topPane.getScene().getWindow();
+        stage.setX(mouseEvent.getScreenX() + xOffset);
+        stage.setY(mouseEvent.getScreenY() + yOffset);
     }
 }
