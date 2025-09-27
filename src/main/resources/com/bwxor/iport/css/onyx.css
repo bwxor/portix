@@ -30,7 +30,7 @@
 }
 
 .button {
-    -fx-background-color: #2b333d;
+    -fx-background-color: #2c3645;
     -fx-border-color: #353e4a;
     -fx-border-radius: 5px;
     -fx-text-fill: #d9e8ff;
@@ -38,7 +38,11 @@
 }
 
 .button:hover {
-    -fx-background-color: #373f4a;
+    -fx-background-color: #354052;
+}
+
+.button:pressed {
+    -fx-background-color: #252f3d;
 }
 
 .table-view {

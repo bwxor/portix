@@ -205,15 +205,14 @@ public class PreferencesController {
 
     @FXML
     public void handleClickAction(MouseEvent mouseEvent) {
-        Stage stage = (Stage) topPane.getScene().getWindow();
-        xOffset = stage.getX() - mouseEvent.getScreenX();
-        yOffset = stage.getY() - mouseEvent.getScreenY();
+        xOffset = mouseEvent.getSceneX();
+        yOffset = mouseEvent.getSceneY();
     }
 
     @FXML
     public void handleMovementAction(MouseEvent mouseEvent) {
         Stage stage = (Stage) topPane.getScene().getWindow();
-        stage.setX(mouseEvent.getScreenX() + xOffset);
-        stage.setY(mouseEvent.getScreenY() + yOffset);
+        stage.setX(mouseEvent.getScreenX() - xOffset);
+        stage.setY(mouseEvent.getScreenY() - yOffset);
     }
 }
