@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 public class MainController {
     private IPAddress from;
@@ -51,6 +53,8 @@ public class MainController {
     private Button closeButton;
     @FXML
     private Button minimizeButton;
+    @FXML
+    private TextField searchTextField;
 
     @FXML
     private Button scanButton;
@@ -72,6 +76,9 @@ public class MainController {
     private TableColumn<Port, String> statusColumn;
     @FXML
     private ProgressBar progressBar;
+    private String searchExpression;
+    private List<ScanResult> scanResults;
+    private ObservableList<ScanResult> observableList;
 
     @FXML
     private void initialize() {
@@ -80,6 +87,11 @@ public class MainController {
 
         from = new IPAddress("192.168.1.1");
         to = new IPAddress("192.168.1.254");
+
+        scanResults = new ArrayList<>();
+        searchExpression = "";
+        observableList = FXCollections.observableArrayList();
+        resultTableView.setItems(observableList);
 
         // ToDo: Keep in a separate resources file
         filter = List.of(
@@ -134,7 +146,6 @@ public class MainController {
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         statusColumn.prefWidthProperty().bind(effectiveWidth.multiply(0.4));
         statusColumn.setStyle("-fx-alignment: CENTER;");
-
     }
 
     @FXML
@@ -144,13 +155,9 @@ public class MainController {
         progressBar.setProgress(0);
         noEntriesToScan = (to.diff(from) + 1) * filter.size();
 
-        resultTableView.setItems(FXCollections.observableArrayList());
+        scanResults.clear();
 
         scanService = new InetSocketQueueScanService();
-
-        var scanResults = new ArrayList<ScanResult>();
-
-        ObservableList<ScanResult> data = FXCollections.observableArrayList();
 
         ExecutorService accumulator = Executors.newSingleThreadExecutor();
         Future<?> future = accumulator.submit(
@@ -182,9 +189,12 @@ public class MainController {
                     while (queue != null && !queue.isEmpty() && !scanService.isStopped()) {
                         ScanResult sr = queue.poll();
                         scanResults.add(sr);
-                        data.add(sr);
+
+                        if (matchesSearchFilter(sr.getIpAddress())) {
+                            observableList.add(sr);
+                        }
+
                         progressBar.setProgress((double) scanResults.size() / noEntriesToScan);
-                        resultTableView.setItems(data);
 
                         if (clearButton.isDisabled()) {
                             clearButton.setDisable(false);
@@ -274,5 +284,33 @@ public class MainController {
         Stage stage = (Stage) topPane.getScene().getWindow();
         stage.setX(mouseEvent.getScreenX() - xOffset);
         stage.setY(mouseEvent.getScreenY() - yOffset);
+    }
+
+    @FXML
+    public void handleSearchTextFieldOnKeyTyped(KeyEvent keyEvent) {
+        searchExpression = searchTextField.getText().trim();
+
+        observableList.setAll(scanResults
+                    .stream()
+                    .filter(e -> matchesSearchFilter(e.getIpAddress()))
+                    .toList());
+    }
+
+    private boolean matchesSearchFilter(IPAddress ipAddress) {
+        String ip = ipAddress.toString();
+
+        if (searchExpression.isEmpty() || searchExpression.equals("*")) {
+            return true;
+        }
+
+        if (searchExpression.startsWith("*") && searchExpression.endsWith("*")) {
+            return ip.contains(searchExpression.substring(1, searchExpression.length() - 1));
+        } else if (searchExpression.endsWith("*")) {
+            return ip.startsWith(searchExpression.substring(0, searchExpression.length() - 1));
+        } else if (searchExpression.startsWith("*")) {
+            return ip.endsWith(searchExpression.substring(1));
+        } else {
+            return ip.equals(searchExpression);
+        }
     }
 }
