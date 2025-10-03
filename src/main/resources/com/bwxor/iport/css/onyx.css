@@ -7,6 +7,10 @@
     -fx-background-color: #282828;
     -fx-background-radius: 8px;
     -fx-background-insets: 0;
+    -fx-border-color: #4D4D4D;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-padding: 3px;
 }
 
 .pane {
@@ -68,13 +72,13 @@
 .table-view .table-cell {
     -fx-background-color: #282828;
     -fx-text-fill: #ffffff;
-    -fx-table-cell-border-color: #495261;
+    -fx-table-cell-border-color: #808080;
 
 }
 
 .table-view .table-row-cell:selected .table-cell {
-    -fx-background-color: #303742;
-    -fx-table-cell-border-color: #495261;
+    -fx-background-color: #3B3B3B;
+    -fx-table-cell-border-color: #808080;
 }
 
 .progress-bar {

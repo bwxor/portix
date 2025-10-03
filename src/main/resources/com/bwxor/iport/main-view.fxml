@@ -6,31 +6,34 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="root" prefHeight="475.0" prefWidth="475.0" styleClass="container" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bwxor.iport.controller.MainController">
+<AnchorPane fx:id="root" prefHeight="475.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bwxor.iport.controller.MainController">
     <clip>
         <Rectangle fx:id="clipRect" arcHeight="16" arcWidth="16" height="475.0" width="475.0" />
     </clip>
-    <VBox prefHeight="475.0" styleClass="container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+    <VBox prefHeight="475.0" styleClass="app-window" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
         <children>
-            <Pane fx:id="topPane" onMouseDragged="#handleMovementAction" onMousePressed="#handleClickAction" prefHeight="36.0" styleClass="pane">
+            <AnchorPane fx:id="topPane" onMouseDragged="#handleMovementAction" onMousePressed="#handleClickAction" prefHeight="36.0" styleClass="pane">
                 <children>
-                    <Button fx:id="closeButton" layoutX="447.0" layoutY="6.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefHeight="23.0" prefWidth="23.0" styleClass="button" text="X">
+                    <Button fx:id="closeButton" layoutX="447.0" layoutY="6.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefHeight="23.0" prefWidth="23.0" styleClass="button" text="X" AnchorPane.rightAnchor="5.0">
                         <font>
                             <Font name="System Bold" size="10.0" />
                         </font>
                     </Button>
-                    <Button fx:id="minimizeButton" layoutX="418.0" layoutY="6.0" mnemonicParsing="false" onAction="#onMinimizeButtonClick" prefHeight="23.0" prefWidth="23.0" styleClass="button" text="_">
+                    <Button fx:id="minimizeButton" layoutX="418.0" layoutY="6.0" mnemonicParsing="false" onAction="#onMinimizeButtonClick" prefHeight="23.0" prefWidth="23.0" styleClass="button" text="_" AnchorPane.rightAnchor="32.5">
                   <font>
                      <Font size="10.0" />
                   </font>
                     </Button>
                     <Label layoutX="14.0" layoutY="10.0" styleClass="label" text="iport" />
                 </children>
-            </Pane>
+            </AnchorPane>
             <ToolBar prefHeight="40.0" prefWidth="200.0" styleClass="container">
                 <items>
                     <Button mnemonicParsing="false" onAction="#onPreferencesButtonClick" text="Preferences" />
-                    <TextField fx:id="searchTextField" onKeyTyped="#handleSearchTextFieldOnKeyTyped" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="213.0" promptText="e.g. 192.168.1.2" styleClass="text" />
+               <HBox alignment="CENTER" maxWidth="1.7976931348623157E308">
+                  <children>
+                          <TextField fx:id="searchTextField" maxHeight="25.0" minHeight="25.0" onKeyTyped="#handleSearchTextFieldOnKeyTyped" prefHeight="25.0" prefWidth="243.0" promptText="e.g. 192.168.1.2" styleClass="text" HBox.hgrow="ALWAYS" />
+                  </children></HBox>
                     <Button fx:id="scanButton" mnemonicParsing="false" onAction="#onScanButtonClick" styleClass="button" text="Scan" />
                     <Button fx:id="stopButton" mnemonicParsing="false" onAction="#onStopButtonClick" styleClass="button" text="Stop" />
                     <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClearButtonClick" styleClass="button" text="Clear" />

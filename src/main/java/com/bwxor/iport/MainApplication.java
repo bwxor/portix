@@ -23,11 +23,11 @@ public class MainApplication extends Application {
 
         stage.getIcons().add(new Image(MainApplication.class.getResourceAsStream("img/icon.png")));
 
-        stage.setWidth(475);
-        stage.setHeight(475);
+        stage.setWidth(500);
+        stage.setHeight(500);
 
-        stage.setMinWidth(475);
-        stage.setMinHeight(475);
+        stage.setMinWidth(500);
+        stage.setMinHeight(500);
 
         stage.setMaxWidth(750);
         stage.setMaxHeight(750);
