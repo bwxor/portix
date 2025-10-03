@@ -1,4 +1,4 @@
-# iport - Open-Source Port Scanning Tool
+# iport: Open-Source Port Scanning Tool
 
 ## Binaries
 
