@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane fx:id="root" prefHeight="475.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bwxor.portix.controller.MainController">
+    <clip>
+        <Rectangle fx:id="clipRect" arcHeight="16" arcWidth="16" height="475.0" width="475.0" />
+    </clip>
+    <VBox prefHeight="475.0" styleClass="app-window" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+        <children>
+            <AnchorPane fx:id="topPane" onMouseDragged="#handleMovementAction" onMousePressed="#handleClickAction" prefHeight="42.0" prefWidth="475.0" styleClass="pane">
+                <children>
+                    <Label alignment="CENTER" layoutX="-1.0" layoutY="12.0" prefHeight="17.0" prefWidth="475.0" styleClass="title" text="Portix" />
+                    <Button fx:id="closeButton" layoutX="439.0" layoutY="6.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefHeight="30.0" prefWidth="30.0" styleClass="btn-title, close" text="✕" AnchorPane.rightAnchor="6.0">
+                    </Button>
+                    <Button fx:id="minimizeButton" layoutX="404.0" layoutY="6.0" mnemonicParsing="false" onAction="#onMinimizeButtonClick" prefHeight="30.0" prefWidth="30.0" styleClass="btn-title, minimize" text="_" AnchorPane.rightAnchor="41.0">
+                    </Button>
+                </children>
+            </AnchorPane>
+            <ToolBar prefHeight="47.0" prefWidth="475.0" styleClass="container">
+                <items>
+                    <Button mnemonicParsing="false" onAction="#onPreferencesButtonClick" styleClass="btn" text="Preferences" />
+               <HBox alignment="CENTER" maxWidth="1.7976931348623157E308">
+                  <children>
+                          <TextField fx:id="searchTextField" maxHeight="25.0" minHeight="25.0" onKeyTyped="#handleSearchTextFieldOnKeyTyped" prefHeight="25.0" prefWidth="243.0" promptText="e.g. 192.168.1.2" styleClass="text" HBox.hgrow="ALWAYS" />
+                  </children></HBox>
+                    <Button fx:id="scanButton" mnemonicParsing="false" onAction="#onScanButtonClick" styleClass="btn" text="Scan" />
+                    <Button fx:id="stopButton" mnemonicParsing="false" onAction="#onStopButtonClick" styleClass="btn" text="Stop" />
+                    <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClearButtonClick" styleClass="btn" text="Clear" />
+                </items>
+            </ToolBar>
+            <TableView fx:id="resultTableView" prefHeight="200.0" prefWidth="200.0" styleClass="table-view" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="ipAddressColumn" text="IP Address" />
+                    <TableColumn fx:id="portColumn" text="Port" />
+                    <TableColumn fx:id="statusColumn" text="Status" />
+                </columns>
+            </TableView>
+            <HBox prefHeight="21.0" prefWidth="390.0" styleClass="container">
+                <children>
+                    <ProgressBar fx:id="progressBar" maxWidth="Infinity" progress="0.0" styleClass="progress-bar" HBox.hgrow="ALWAYS" />
+                </children>
+            <padding>
+               <Insets left="2.0" right="2.0" />
+            </padding>
+            </HBox>
+        </children>
+        <VBox.margin>
+            <Insets />
+        </VBox.margin>
+    </VBox>
+</AnchorPane>

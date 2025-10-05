@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.bwxor</groupId>
-    <artifactId>iport</artifactId>
+    <artifactId>portix</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>iport</name>
+    <name>portix</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -1,4 +1,4 @@
-module com.bwxor.iport {
+module com.bwxor.portix {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -8,10 +8,10 @@ module com.bwxor.iport {
     requires eu.hansolo.tilesfx;
     requires javafx.graphics;
 
-    opens com.bwxor.iport to javafx.fxml;
-    opens com.bwxor.iport.entity to javafx.base;
+    opens com.bwxor.portix to javafx.fxml;
+    opens com.bwxor.portix.entity to javafx.base;
 
-    exports com.bwxor.iport;
-    exports com.bwxor.iport.controller;
-    opens com.bwxor.iport.controller to javafx.fxml;
+    exports com.bwxor.portix;
+    exports com.bwxor.portix.controller;
+    opens com.bwxor.portix.controller to javafx.fxml;
 }

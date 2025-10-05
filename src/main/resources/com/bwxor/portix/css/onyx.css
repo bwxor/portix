@@ -1,0 +1,128 @@
+.container {
+    -fx-background-color: #1C1C1C;
+    -fx-text-fill: #ffffff;
+}
+
+.app-window {
+    -fx-background-color: #1C1C1C;
+    -fx-background-radius: 8px;
+    -fx-background-insets: 0;
+    -fx-border-color: #303030;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-padding: 3px;
+}
+
+.pane {
+    -fx-background-color: #1C1C1C;
+}
+
+.title {
+    -fx-font-family: "Funnel Sans";
+    -fx-font-weight: bold;
+    -fx-text-fill: #B5B5B5;
+}
+
+.lbl {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Funnel Sans";
+}
+
+.text {
+    -fx-background-color: #262626;
+    -fx-border-color: #323232;
+    -fx-border-radius: 5px;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 5px;
+    -fx-font-family: "Funnel Sans";
+}
+
+.text .content {
+    -fx-background-color: #262626;
+}
+
+.btn-title {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Funnel Sans";
+}
+
+.close:hover {
+    -fx-background-color: #C2230E;
+}
+
+.close:pressed {
+    -fx-background-color: #A11F0D;
+}
+
+.minimize:hover {
+    -fx-background-color: #262626;
+}
+
+.minimize:pressed {
+    -fx-background-color: #171717;
+}
+
+.btn {
+    -fx-background-color: #262626;
+    -fx-border-width: 1px;
+    -fx-border-color: #3B3B3B;
+    -fx-border-radius: 5px;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 5px;
+    -fx-background-insets: 0;
+    -fx-font-family: "Funnel Sans";
+}
+
+.btn:hover {
+    -fx-background-color: #2E2E2E;
+}
+
+.btn:pressed {
+    -fx-background-color: #171717;
+}
+
+.table-view {
+    -fx-background-color: #1C1C1C;
+    -fx-table-cell-border-color: #373A40;
+}
+
+.table-view .column-header {
+    -fx-background-color: #1C1C1C;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Funnel Sans";
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Funnel Sans";
+}
+
+.table-view .placeholder .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Funnel Sans";
+}
+
+.table-view .table-cell {
+    -fx-background-color: #1C1C1C;
+    -fx-text-fill: #ffffff;
+    -fx-table-cell-border-color: #808080;
+    -fx-font-family: "Funnel Sans";
+}
+
+.table-view .table-row-cell:selected .table-cell {
+    -fx-background-color: #3B3B3B;
+    -fx-table-cell-border-color: #808080;
+}
+
+.progress-bar {
+    -fx-border-radius: 0px;
+}
+
+.progress-bar > .track {
+    -fx-background-color: #262626;
+}
+
+.progress-bar > .bar {
+    -fx-background-color: #c7d6ed;
+}
