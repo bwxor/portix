@@ -2,7 +2,7 @@
 
 ## Binaries
 
-iport is, as of now, available for:
+Portix is, as of now, available for:
 - Windows
 - Linux
 
