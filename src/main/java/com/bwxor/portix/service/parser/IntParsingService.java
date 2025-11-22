@@ -1,7 +1,7 @@
-package com.bwxor.portix.util;
+package com.bwxor.portix.service.parser;
 
-public class IntParser {
-    public static boolean tryParse(String input) {
+public class IntParsingService {
+    public boolean tryParse(String input) {
         try {
             Integer.parseInt(input);
             return true;

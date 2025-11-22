@@ -1,7 +1,7 @@
-package com.bwxor.portix.util;
+package com.bwxor.portix.service.parser;
 
-public class ByteParser {
-    public static boolean tryParse(String input) {
+public class ByteParsingService {
+    public boolean tryParse(String input) {
         int parseResult;
 
         try {

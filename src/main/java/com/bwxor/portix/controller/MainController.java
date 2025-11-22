@@ -4,8 +4,9 @@ import com.bwxor.portix.MainApplication;
 import com.bwxor.portix.entity.IPAddress;
 import com.bwxor.portix.entity.Port;
 import com.bwxor.portix.entity.ScanResult;
-import com.bwxor.portix.service.scan.AbstractQueueScanService;
-import com.bwxor.portix.service.scan.impl.InetSocketQueueScanService;
+import com.bwxor.portix.service.scan.QueueScanService;
+import com.bwxor.portix.service.scan.QueueScanner;
+import com.bwxor.portix.service.scan.impl.InetSocketQueueScanner;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +29,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
-import java.util.stream.Collectors;
 
 public class MainController {
     private IPAddress from;
@@ -36,7 +36,8 @@ public class MainController {
     private List<Port> filter;
     private int timeout;
 
-    private AbstractQueueScanService scanService;
+    private QueueScanService scanService;
+    private QueueScanner queueScanner;
     private long noEntriesToScan;
 
     private double xOffset = 0;
@@ -157,7 +158,9 @@ public class MainController {
 
         scanResults.clear();
 
-        scanService = new InetSocketQueueScanService();
+        queueScanner = new InetSocketQueueScanner();
+        scanService = new QueueScanService();
+        scanService.setQueueScanner(queueScanner);
 
         ExecutorService accumulator = Executors.newSingleThreadExecutor();
         Future<?> future = accumulator.submit(
@@ -291,9 +294,9 @@ public class MainController {
         searchExpression = searchTextField.getText().trim();
 
         observableList.setAll(scanResults
-                    .stream()
-                    .filter(e -> matchesSearchFilter(e.getIpAddress()))
-                    .toList());
+                .stream()
+                .filter(e -> matchesSearchFilter(e.getIpAddress()))
+                .toList());
     }
 
     private boolean matchesSearchFilter(IPAddress ipAddress) {

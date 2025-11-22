@@ -3,17 +3,22 @@ package com.bwxor.portix.service.scan;
 import com.bwxor.portix.entity.IPAddress;
 import com.bwxor.portix.entity.Port;
 import com.bwxor.portix.entity.ScanResult;
+import com.bwxor.portix.service.scan.exception.UninitializedQueueScannerException;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicLong;
 
-public abstract class AbstractQueueScanService implements ScanService {
+public class QueueScanService implements ScanService {
+    protected QueueScanner queueScanner;
     protected ConcurrentLinkedQueue<ScanResult> scanQueue;
     protected boolean stopped;
 
     @Override
     public synchronized void scan(IPAddress start, IPAddress end, List<Port> ports, int timeout) {
+        if (queueScanner == null) {
+            throw new UninitializedQueueScannerException();
+        }
+
         scanQueue = new ConcurrentLinkedQueue<>();
 
         IPAddress currentIp = start;
@@ -24,7 +29,7 @@ public abstract class AbstractQueueScanService implements ScanService {
                     return;
                 }
 
-                ScanResult scanResult = doScan(new IPAddress(currentIp.toString()), p, timeout);
+                ScanResult scanResult = queueScanner.doScan(new IPAddress(currentIp.toString()), p, timeout);
                 scanQueue.add(scanResult);
             }
 
@@ -32,11 +37,13 @@ public abstract class AbstractQueueScanService implements ScanService {
         }
     }
 
+    public void setQueueScanner(QueueScanner queueScanner) {
+        this.queueScanner = queueScanner;
+    }
+
     public ConcurrentLinkedQueue<ScanResult> getScanQueue() {
         return scanQueue;
     }
-
-    protected abstract ScanResult doScan(IPAddress currentIp, Port port, int timeout);
 
     public void setScanQueue(ConcurrentLinkedQueue<ScanResult> scanQueue) {
         this.scanQueue = scanQueue;

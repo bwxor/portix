@@ -2,8 +2,8 @@ package com.bwxor.portix.controller;
 
 import com.bwxor.portix.entity.IPAddress;
 import com.bwxor.portix.entity.Port;
-import com.bwxor.portix.exception.IPAddressBuildException;
-import com.bwxor.portix.util.IntParser;
+import com.bwxor.portix.service.scan.exception.UninitializedQueueScannerException;
+import com.bwxor.portix.service.parser.IntParsingService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PreferencesController {
+    private IntParsingService intParsingService = new IntParsingService();
     private IPAddress from;
     private IPAddress to;
     private List<Port> filter;
@@ -158,20 +159,20 @@ public class PreferencesController {
     public void onApplyButtonClick() {
         try {
             from = new IPAddress(fromTextField.getText());
-        } catch (IPAddressBuildException ex) {
+        } catch (UninitializedQueueScannerException ex) {
             from = new IPAddress("192.168.1.1");
         }
 
         try {
             to = new IPAddress(toTextField.getText());
-        } catch (IPAddressBuildException ex) {
+        } catch (UninitializedQueueScannerException ex) {
             to = new IPAddress("192.168.1.254");
         }
 
         String[] delimitedFilters = filterTextArea.getText().trim().replace("\r", "").split("\n");
 
         filter = Arrays.stream(delimitedFilters)
-                .filter(IntParser::tryParse)
+                .filter(intParsingService::tryParse)
                 .map(e -> new Port(Integer.parseInt(e)))
                 .collect(Collectors.toList());
 

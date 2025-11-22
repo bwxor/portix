@@ -1,10 +1,10 @@
 package com.bwxor.portix.entity;
 
 import com.bwxor.portix.exception.IPAddressBuildException;
-import com.bwxor.portix.util.ByteParser;
+import com.bwxor.portix.service.scan.exception.UninitializedQueueScannerException;
+import com.bwxor.portix.service.parser.ByteParsingService;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 public class IPAddress {
     /**
@@ -23,7 +23,7 @@ public class IPAddress {
             throw new IPAddressBuildException("String is not delimited by 4 dots.");
         }
 
-        if (Arrays.stream(elements).anyMatch(e -> !ByteParser.tryParse(e))) {
+        if (Arrays.stream(elements).anyMatch(e -> !new ByteParsingService().tryParse(e))) {
             throw new IPAddressBuildException("Parts of the IP Address need to be bytes.");
         }
 
